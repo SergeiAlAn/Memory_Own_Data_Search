@@ -1,0 +1,36 @@
+# Secrets
+.env
+.env.*
+!.env.example
+**/.env
+!**/.env.example
+
+# Python
+venv/
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+
+# Runtime / user documents (Telegram downloads, test files)
+hay_v2_bot/tmp/*
+!hay_v2_bot/tmp/.gitkeep
+*.pdf
+*.docx
+*.doc
+*.pptx
+*.xlsx
+*.xls
+
+# Logs & IDE
+*.log
+.idea/
+.vscode/
+.cursor/
+
+# OS
+Thumbs.db
+Desktop.ini
+.DS_Store

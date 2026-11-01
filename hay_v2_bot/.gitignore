@@ -1,0 +1,25 @@
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+
+# Telegram downloads & local runtime
+tmp/*
+!tmp/.gitkeep
+
+# User documents must never be committed
+*.pdf
+*.docx
+*.doc
+*.pptx
+*.xlsx
+*.xls
+
+# Logs & IDE
+*.log
+.idea/
+.vscode/
