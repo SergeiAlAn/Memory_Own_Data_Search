@@ -2,8 +2,6 @@
 .env
 .env.*
 !.env.example
-**/.env
-!**/.env.example
 
 # Python
 venv/
@@ -15,8 +13,8 @@ __pycache__/
 .mypy_cache/
 
 # Runtime / user documents (Telegram downloads, test files)
-hay_v2_bot/tmp/*
-!hay_v2_bot/tmp/.gitkeep
+tmp/*
+!tmp/.gitkeep
 *.pdf
 *.docx
 *.doc

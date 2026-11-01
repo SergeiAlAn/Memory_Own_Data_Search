@@ -22,7 +22,7 @@ logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
 )
-logger = logging.getLogger("hay_v2_bot")
+logger = logging.getLogger("own_data_search")
 
 
 def main() -> None:

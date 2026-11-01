@@ -7,7 +7,7 @@
 
 | # | Пункт ДЗ | Как реализовано |
 |---|---|---|
-| 1 | **Новая версия бота с модульной архитектурой** | Отдельная директория `hay_v2_bot/`. Логика разделена на `components/` (инфраструктура и сервисы), `pipelines/` (ingestion / generation) и `bot/` (Telegram). Точка входа — `main.py`. |
+| 1 | **Новая версия бота с модульной архитектурой** | Проект в корне репозитория. Логика разделена на `components/` (инфраструктура и сервисы), `pipelines/` (ingestion / generation) и `bot/` (Telegram). Точка входа — `main.py`. |
 | 2 | **Интеграция Docling** | `pipelines/ingestion.py`: `DoclingConverter` в режиме `ExportType.DOC_CHUNKS` + `HybridChunker`. Поддерживаются PDF, DOCX и другие форматы Docling; файл скачивается из Telegram и разбирается на смысловые чанки. |
 | 3 | **Сохранение в Pinecone** | После Docling чанки проходят `DocumentMetaEnricher` (meta: `file_name`, `chunk_index`, `page_number`, `user_id`) → `OpenAIDocumentEmbedder` → `DocumentWriter` → `PineconeDocumentStore` (`metric=cosine`). |
 | 4 | **Резюме и ответы с учётом документов** | После успешной загрузки бот пишет «Готово…» и **одно** предложение-резюме (`components/summarizer.py`). На текстовые вопросы срабатывает `generation_pipeline`: `PineconeEmbeddingRetriever` подтягивает факты пользователя и чанки файлов → Agent/LLM отвечает по этому контексту. |
@@ -17,7 +17,7 @@
 ## Архитектура
 
 ```text
-hay_v2_bot/
+.
 ├── main.py                 # точка входа
 ├── components/
 │   ├── config.py           # настройки из .env
@@ -63,16 +63,16 @@ Telegram document
 ```powershell
 cd "c:\Users\User\Desktop\Course\0807 Own_Data_Search"
 .\venv\Scripts\Activate.ps1
-pip install -r hay_v2_bot\requirements.txt
-copy hay_v2_bot\.env.example hay_v2_bot\.env   # затем заполнить ключи
-python hay_v2_bot\main.py
+pip install -r requirements.txt
+copy .env.example .env   # затем заполнить ключи
+python main.py
 ```
 
 Нужны (только в локальном `.env`, не в git):  
 `OPENAI_KEY`, `OPENAI_BASE_URL`, `PINICONE_TOKEN`, `PINECONE_INDEX_NAME`, `BOT_TOKEN`.  
 Индекс Pinecone: dimension `1536`, metric `cosine`.
 
-Образец переменных — `hay_v2_bot/.env.example` (без секретов).
+Образец переменных — `.env.example` (без секретов).
 
 ## Что умеет (как в v1 + файлы)
 
@@ -88,8 +88,8 @@ python hay_v2_bot\main.py
 
 - `.env` и любые API-/бот-токены;
 - `venv/`;
-- временные файлы из `hay_v2_bot/tmp/` (скачанные из Telegram документы);
+- временные файлы из `tmp/` (скачанные из Telegram документы);
 - пользовательские PDF/DOCX и прочие исходники документов;
 - логи.
 
-Используйте корневой `.gitignore` и `hay_v2_bot/.gitignore`. Перед коммитом проверьте `git status`.
+Используйте корневой `.gitignore`. Перед коммитом проверьте `git status`.
