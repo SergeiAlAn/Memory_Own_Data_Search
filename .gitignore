@@ -21,6 +21,10 @@ tmp/*
 *.pptx
 *.xlsx
 *.xls
+# Исключение: тестовые материалы для сдачи
+!sources/
+!sources/**/*.pdf
+!sources/**/*.docx
 
 # Logs & IDE
 *.log

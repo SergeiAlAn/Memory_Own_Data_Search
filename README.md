@@ -12,13 +12,17 @@
 | 3 | **Сохранение в Pinecone** | После Docling чанки проходят `DocumentMetaEnricher` (meta: `file_name`, `chunk_index`, `page_number`, `user_id`) → `OpenAIDocumentEmbedder` → `DocumentWriter` → `PineconeDocumentStore` (`metric=cosine`). |
 | 4 | **Резюме и ответы с учётом документов** | После успешной загрузки бот пишет «Готово…» и **одно** предложение-резюме (`components/summarizer.py`). На текстовые вопросы срабатывает `generation_pipeline`: `PineconeEmbeddingRetriever` подтягивает факты пользователя и чанки файлов → Agent/LLM отвечает по этому контексту. |
 
-Проверка end-to-end: в Telegram загружался тестовый PDF, чанки записались в Pinecone, затем бот отвечал на вопросы по содержимому документа через retriever.
+Проверка end-to-end: в Telegram загружался тестовый PDF  
+`sources/digital_ruble_30062025.pdf` (материалы о цифровом рубле),  
+чанки записались в Pinecone, затем бот отвечал на вопросы по содержимому документа через retriever.
 
 ## Архитектура
 
 ```text
 .
 ├── main.py                 # точка входа
+├── sources/                # тестовые документы для проверки ingestion
+│   └── digital_ruble_30062025.pdf
 ├── components/
 │   ├── config.py           # настройки из .env
 │   ├── store.py            # Pinecone + embedders + retriever
@@ -89,7 +93,9 @@ python main.py
 - `.env` и любые API-/бот-токены;
 - `venv/`;
 - временные файлы из `tmp/` (скачанные из Telegram документы);
-- пользовательские PDF/DOCX и прочие исходники документов;
+- произвольные пользовательские PDF/DOCX вне `sources/`;
 - логи.
 
+В репозиторий допускается тестовый документ из `sources/`  
+(`digital_ruble_30062025.pdf`) — он нужен для демонстрации проверки ДЗ.  
 Используйте корневой `.gitignore`. Перед коммитом проверьте `git status`.
